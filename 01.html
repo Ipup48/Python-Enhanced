@@ -224,8 +224,8 @@ print(p.price)
     <div class="q"><p>2) หากต้องเลือก “จุดเดียว” ในคลาสเพื่อเฝ้าระวังราคา คุณจะเลือกจุดใด เพราะเหตุใด</p>
         <div class="line"> ใช้ Setter Method เป็น@price.setter เพราะทำให้ตรวจสอบความถูกต้องได้ครบถ้วนที่จุดนี้จุดเดียว</div></div>
     <div class="q"><p>3) ลองให้ AI เสนอวิธีป้องกันราคาติดลบใน Python มา 3 วิธี แล้วถกเถียงกับเพื่อน: วิธีใดน่าเชื่อถือที่สุด เพราะเหตุผลใด (AI เชื่อถือได้มากน้อยเพียงใด?)</p>
-        <div class="line"> </div>
-        <div class="line"></div></div>
+        <div class="line"> 1.ใช้ @property และ @price.setter 2.ใช้ Descriptor Class  3.ใช้ Pydantic Library</div>
+        <div class="line">วิธีที่1 น่าเชื่อถือสุด เพราะเป็นมาตรฐานหลักของภาษาpython ความน่าเชื่อถือสูง</div></div>
 
     <!-- Teacher: Knowledge Box (5%) -->
     <div class="knowledge">
@@ -273,17 +273,17 @@ classDiagram
 
     <h2>ส่วนที่ 1: อ่านแผนภาพแล้วตอบคำถาม (10 คะแนน)</h2>
     <div class="q"><p>1) สัญลักษณ์ <code>(property)</code> กำกับหลัง id, name, price หมายความว่าอย่างไรใน Python และแตกต่างจาก attribute ปกติอย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">หมายถึง Read-Only Property(@property) ที่อนุญาตให้โค้ดภายนอก อ่านค่าได้อย่างเดียว แต่แก้ไขโดยตรงไม่ได้ ต้องแก้ผ่าน </div><div class="line">Method ที่อนุญาตเท่านั้น เช่น apply_discount Attribute ปกติ แก้ไขได้ตรงๆ ไม่คุมสิทธิ์ แต่ Property ควบคุมการเข้าถึงผ่าน Method</div></div>
     <div class="q"><p>2) สัญลักษณ์ + และ - หน้าสมาชิกหมายถึงอะไร และการตั้งชื่อ <code>_validate_price</code> ด้วย underscore เดี่ยวสื่อความหมายตาม convention ของ Python ว่าอย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">สัญลักษณ์ + และ -: + คือ Public (ภายนอกเข้าถึงได้) ส่วน - คือ Private (ใช้เฉพาะภายในคลาส)</div><div class="line">Underscore เดี่ยว (_): สื่อถึง Internal Method (ใช้ภายในคลาสเท่านั้น ไม่ควรเรียกใช้งานจากภายนอกโดยตรง)</div></div>
     <div class="q"><p>3) เหตุใด <code>price</code> จึงอ่านได้แต่ไม่สามารถกำหนดค่าจากภายนอกได้ ใช้กลไกใดของ Python <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เพื่อซ่อนข้อมูล (Information Hiding) และบังคับให้แก้ไขราคาผ่านเมธอด apply_discount() เท่านั้น</div><div class="line">ใช้ @property Decorator โดยสร้างเฉพาะ Getter (ไม่มี Setter)</div></div>
     <div class="q"><p>4) จงระบุ Invariant ของคลาส Product มา 2 ข้อ <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">price ต้องถูกต้องเสมอ: ค่าราคาต้องผ่านการตรวจสอบจาก _validate_price() เสมอ (หากไม่ถูกต้องจะส่ง ValueError)</div><div class="line">id, name, price ต้องเป็น Read-Only: ห้ามภายนอกแก้ไขโดยตรง แก้ไขได้เฉพาะผ่าน Method ที่กำหนด (apply_discount()) เท่านั้น</div></div>
     <div class="q"><p>5) ลูกศรที่กำกับว่า “raises” ชี้ไปยัง ValueError หมายความว่าอย่างไร และเกิดขึ้นเมื่อใด <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">หมายถึงคลาสจะโยนข้อผิดพลาด ValueError ออกมาเมื่อราคาไม่ผ่านการตรวจสอบใน _validate_price() (เช่น ราคาติดลบ)</div></div>
     <div class="q"><p>6) เพราะเหตุใด Product จึงถือเป็น “Information Expert” ในการคำนวณราคาหลังลด <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">เพราะ Product เป็นคลาสที่ถือครองข้อมูลราคา (price) และ Logic ที่ต้องใช้ในการคำนวณไว้กับตัวเองทั้งหมด</div></div>
 
     <h2>ส่วนที่ 2: วิเคราะห์โค้ด (10 คะแนน)</h2>
 <pre class="code">
@@ -319,13 +319,13 @@ class Product:
         return round(price, 2)
 </pre>
     <div class="q"><p>1) โค้ดบรรทัดใดป้องกันไม่ให้สร้างสินค้าที่มีราคาติดลบ <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">if price < 0: และ raise ValueError(...) ในเมธอด _validate_price()</div></div>
     <div class="q"><p>2) เมื่อเรียก <code>Product(1, 'สมุดโน้ต', 45.00)</code> แล้วเรียก <code>apply_discount(10)</code> ค่า price จะเป็นเท่าใด จงแสดงวิธีทำ <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ค่า price: 40.50 บาท</div><div class="line">วิธีทำ: round(45.00 * (100 - 10) / 100, 2) = round(45.00 * 0.90, 2) = 40.50</div></div>
     <div class="q"><p>3) หากเรียก <code>apply_discount(150)</code> จะเกิดอะไรขึ้น เพราะโค้ดบรรทัดใด <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เกิดข้อผิดพลาด ValueError("Discount must be between 0 and 100.")</div><div class="line">บรรทัด if percent < 0 or percent > 100: และ raise ValueError(...) ในเมธอด apply_discount()</div></div>
     <div class="q"><p>4) หากภายนอกคลาสเขียนว่า <code>product.price = -500</code> จะเกิดผลใด เพราะเหตุใด <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เกิดข้อผิดพลาด AttributeError (ไม่สามารถเปลี่ยนค่าได้)</div><div class="line">price ถูกกำหนดให้เป็น Read-Only Property ผ่าน @property โดยไม่มี Setter (@price.setter)</div></div>
 
     <h2>ส่วนที่ 3: เติมโค้ดในช่องว่าง (12 คะแนน)</h2>
 <pre class="code">
@@ -352,9 +352,9 @@ class Product:
     <table>
         <thead><tr><th>ช่องที่</th><th>คำตอบ</th><th>ช่องที่</th><th>คำตอบ</th></tr></thead>
         <tbody>
-            <tr><td>(1)</td><td class="fill"></td><td>(4)</td><td class="fill"></td></tr>
-            <tr><td>(2)</td><td class="fill"></td><td>(5)</td><td class="fill"></td></tr>
-            <tr><td>(3)</td><td class="fill"></td><td>(6)</td><td class="fill"></td></tr>
+            <tr><td>(1)</td><td class="fill">property</td><td>(4)</td><td class="fill">ValueError</td></tr>
+            <tr><td>(2)</td><td class="fill">ValueError</td><td>(5)</td><td class="fill">round</td></tr>
+            <tr><td>(3)</td><td class="fill">100</td><td>(6)</td><td class="fill">_validate_price</td></tr>
         </tbody>
     </table>
 
@@ -362,35 +362,35 @@ class Product:
     <table>
         <thead><tr><th style="width:40%;">Test Case</th><th>ผลลัพธ์ที่คาดหวัง</th><th>ผลลัพธ์จริง</th><th style="width:10%;">ผ่าน?</th></tr></thead>
         <tbody>
-            <tr><td>p = Product(1, 'สมุดโน้ต', 45.00) แล้ว p.display_price()</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>p.apply_discount(10) แล้วดูค่า p.price</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>p.apply_discount(150)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>p.apply_discount(-5)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>Product(2, 'ปากกา', -10)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>p.price = 999 (ภายนอกคลาส)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+            <tr><td>p = Product(1, 'สมุดโน้ต', 45.00) แล้ว p.display_price()</td><td class="fill">"สมุดโน้ต (#1) ราคา: 45.00 บาท"</td><td class="fill">"สมุดโน้ต (#1) ราคา: 45.00 บาท"</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>p.apply_discount(10) แล้วดูค่า p.price</td><td class="fill">40.5</td><td class="fill">40.5</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>p.apply_discount(150)</td><td class="fill">ValueError</td><td class="fill">ValueError: Discount must be between 0 and 100.</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>p.apply_discount(-5)</td><td class="fill">ValueError</td><td class="fill">ValueError: Discount must be between 0 and 100.</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>Product(2, 'ปากกา', -10)</td><td class="fill">ValueError</td><td class="fill">ValueError: Price cannot be negative.</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>p.price = 999 (ภายนอกคลาส)</td><td class="fill">AttributeError</td><td class="fill">AttributeError: property 'price' of 'Product' object has no setter</td><td class="fill">ผ่าน</td></tr>
         </tbody>
     </table>
 
     <h2>ส่วนที่ 5: สะท้อนคิดเชิงออกแบบ OOAD (6 คะแนน)</h2>
     <div class="q"><p>1) คลาส Product แสดงถึง Single Responsibility Principle อย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ทำหน้าที่จัดการเฉพาะข้อมูลและพฤติกรรมที่เกี่ยวกับตัวสินค้าเท่านั้น (จัดเก็บข้อมูล ตรวจสอบความถูกต้องของราคา และคำนวณ</div><div class="line">ส่วนลด) โดยไม่ปะปนกับหน้าที่อื่นที่ไม่เกี่ยวข้อง (เช่น การพิมพ์ใบเสร็จ หรือการรับชำระเงิน)</div></div>
     <div class="q"><p>2) Information Hiding ปรากฏอยู่ในจุดใดของคลาสนี้บ้าง จงยกตัวอย่างอย่างน้อย 2 จุด <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">จุดที่ 1: แอตทริบิวต์ _id, _name, _price ถูกซ่อนไว้ด้วย _ แล้วเปิดอ่านผ่าน @property (เป็น Read-Only)</div><div class="line">จุดที่ 2: เมธอด _validate_price() ถูกซ่อนไว้เพื่อใช้ตรวจสอบราคาภายในคลาสเท่านั้น</div></div>
     <div class="q"><p>3) เทียบกับ PHP 8.4: กลไกใดของ PHP ที่เทียบเท่ากับ <code>@property</code> แบบไม่มี setter และเทียบเท่ากับ <code>readonly</code> <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เทียบเท่า @property (ไม่มี setter): Property Hooks (นิยามเฉพาะ get)</div><div class="line">เทียบเท่า readonly: readonly property หรือ Asymmetric Visibility (public private(set))</div></div>
 
     <!-- Facilitator: Future -->
     <h2><span class="tag3f">Future</span> นำสิ่งค้นพบไปสู่อนาคต</h2>
     <div class="q"><p>1) ในโปรเจกต์ Python ถัดไปของคุณ ข้อมูลใดคือ “price คนใหม่” (ห้ามพังเด็ดขาด) และคุณจะออกแบบให้มัน “พลาดไม่ได้” อย่างไร</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ข้อมูล: ยอดเงินคงเหลือในบัญชีผู้ใช้ (balance)</div><div class="line">ออกแบบ: ซ่อนเป็น Read-Only ด้วย @property และกรองค่าด้วย Method ตรวจสอบก่อนทุกครั้ง</div></div>
     <div class="q"><p>2) เขียน commitments สั้น ๆ 2 ข้อ ที่จะเปลี่ยนวิธีเขียนโค้ดของคุณหลังจบใบงานนี้</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">1.ใช้ @property ทำ Read-Only ป้องกันภายนอกแก้ไขโดยตรง 2.สร้าง Validation Method ตรวจสอบความถูกต้องของข้อมูลเสมอ<div class="line"></div></div>
 
     <!-- Coach: Reflect -->
     <div class="coach">
         <strong>🪞 มุมสะท้อนคิดของโค้ช:</strong>
         <div class="q"><p>ก่อนส่งใบงาน ชมความพยายามของตัวเอง 1 เรื่อง แล้วบันทึกว่า “คำถามใดที่ยังค้างอยู่ในหัวคุณ”</p>
-            <div class="line"></div><div class="line"></div></div>
+            <div class="line">พยายามตั้งใจไล่โค้ชทีละบรรทัดจนเข้าใจหลักการ Encapsulation และ OOAD ในภาษา Python ได้อย่างถูกต้อง</div><div class="line">หากต้องการเปิดให้แก้ไขราคาได้ในอนาคต ควรออกแบบ @price.setter ร่วมกับ _validate_price() อย่างไรให้ปลอดภัยที่สุด</div></div>
     </div>
 
     <h2>เกณฑ์การให้คะแนน</h2>
