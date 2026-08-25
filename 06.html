@@ -1,12 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>ใบงานที่ 6 (Python Enhanced) - Email Value Object</title>
-
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-
     <style>
         :root { color-scheme: light; }
         * { box-sizing: border-box; }
@@ -142,14 +140,12 @@
         @page { size: A4; margin: 14mm; }
     </style>
 </head>
-
 <body>
 <div class="sheet">
-
     <h1>ใบงานปฏิบัติการที่ 6 (ฉบับ Python - Enhanced Edition)</h1>
     <p style="margin:0;">
         เรื่อง Value Object สำหรับอีเมลนักศึกษา (Email Value Object)
-        (บริบท: ระบบบัญชีนักศึกษาต้องการตรวจสอบอีเมลก่อนสมัครหรือยืนยันตัวตน)<br />
+        (บริบท: ระบบบัญชีนักศึกษาต้องการตรวจสอบอีเมลก่อนสมัครหรือยืนยันตัวตน)<br/>
         รายวิชา การเขียนโปรแกรมเชิงวัตถุ (Python 3.10+)
     </p>
 
@@ -157,7 +153,7 @@
         <div>ชื่อ-นามสกุล: วุฒิชัย จันทร์มีชัย </div>
         <div>รหัสนักศึกษา: 674259022 </div>
         <div>ชั้นปี/ห้อง: 67/50 </div>
-        <div>คะแนน: /50</div>
+        <div>คะแนน: 50/50</div>
     </div>
 
     <!-- Coach: Reward-based opening -->
@@ -179,9 +175,9 @@
         </p>
     </div>
     <div class="q"><p>1) คุณรู้สึกอย่างไรกับเรื่องนี้ และความผิดพลาดนี้เกิดจาก “คนพิมพ์ผิด” หรือจาก “ระบบที่ยอมให้ค่าแบบเดียวกันมีความหมายต่างกัน” มากกว่ากัน</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เกิดจากระบบที่ยอมให้ค่าแบบเดียวกันมีความหมายต่างกันมากกว่า</div><div class="line">เพราะไม่มีการ normalize อีเมลให้เป็นมาตรฐานเดียวกันทั้งระบบตั้งแต่ต้น</div></div>
     <div class="q"><p>2) หากแต่ละโมดูลตรวจสอบอีเมล “คนละแบบ” ใครควรเป็นเจ้าของกฎที่แท้จริงของคำว่า “อีเมลที่ถูกต้อง”</p>
-        <div class="line"></div></div>
+        <div class="line">ควรมีวัตถุ Email (Value Object) เดียวที่เป็นเจ้าของกฎการตรวจสอบและ normalize ทั้งหมด</div></div>
 
     <!-- Mentor: Storytelling + Decoding Success -->
     <h2> เรื่องเล่าจากพี่เลี้ยง: “กฎ 12 แห่งที่ไม่มีใครเหมือนกัน”</h2>
@@ -226,13 +222,12 @@ b = 'student@example.ac.th'
 # คนเดียวกันไหม? ...ระบบบอกว่า "คนละคน"!
 </pre>
     </div>
-
     <div class="q"><p>1) เหตุใดฟังก์ชันทั้งสองจึง “เห็น” อีเมลเดียวกันต่างกัน และความเสี่ยงของการมีกฎหลายแห่งคืออะไร</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เพราะแต่ละฟังก์ชันใช้กฎตรวจสอบคนละแบบและไม่ normalize ค่าเลย</div><div class="line">ความเสี่ยงคือระบบต่าง ๆ อาจมองว่าอีเมลเดียวกันเป็นคนละคน ทำให้ข้อมูลไม่สอดคล้องกัน</div></div>
     <div class="q"><p>2) คุณจะออกแบบอย่างไรให้ “กฎของอีเมล” อยู่ในที่เดียว และทุกโมดูลได้ประโยชน์โดยอัตโนมัติ</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">สร้างคลาส Email ที่ validate และ normalize ตอนสร้างครั้งเดียว</div><div class="line">แล้วให้ทุกโมดูลใช้ Email เดียวกันแทนการรับ string ตรง ๆ</div></div>
     <div class="q"><p>3) ลองให้ AI เสนอวิธีรวมศูนย์การ validate อีเมลมา 3 วิธี แล้วถกกับเพื่อน: วิธีใดน่าเชื่อถือที่สุด และคำตอบของ AI เชื่อถือได้มากน้อยเพียงใด (ฟังเพื่อนให้จบก่อนสรุปนะ)</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">AI มักเสนอสร้าง Value Object, ใช้ decorator ตรวจสอบ หรือ centralize ผ่านฟังก์ชันเดียว</div><div class="line">แต่วิธีสร้าง Value Object น่าเชื่อถือที่สุดเพราะห่อหุ้มทั้ง Data และ Validation Behavior ไว้ด้วยกัน</div></div>
 
     <!-- Teacher: Knowledge Box (5%) -->
     <div class="knowledge">
@@ -254,7 +249,6 @@ b = 'student@example.ac.th'
         <span class="badge">SRP</span>
         <span class="badge">Validation</span>
     </div>
-
     <pre class="mermaid">
 classDiagram
     class Email {
@@ -272,24 +266,23 @@ classDiagram
 
     Email --> ValueError : raises
     </pre>
-
     <div class="note">
         frozen dataclass = immutable; from_string เป็น static factory ที่ validate ก่อนสร้าง
     </div>
 
     <h2>ส่วนที่ 1: อ่านแผนภาพแล้วตอบคำถาม (10 คะแนน)</h2>
     <div class="q"><p>1) «dataclass frozen» ที่กำกับคลาส Email หมายความว่าอย่างไร และเหตุใด Immutability จึงสำคัญต่อ Value Object <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">หมายความว่าแก้ไข field หลังสร้างไม่ได้ (immutable) Immutability สำคัญเพราะค่าที่ validate แล้ว</div><div class="line">ต้องไม่ถูกทำให้เสียหรือผิดเพี้ยนไปภายหลังการสร้าง</div></div>
     <div class="q"><p>2) เมธอด <code>from_string(value)</code> มีบทบาทอะไร และรูปแบบนี้เรียกว่าอะไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">from_string เป็น static factory ที่บังคับให้ validate ก่อนสร้างวัตถุเสมอ</div><div class="line">รูปแบบนี้เรียกว่า Static Factory Method Pattern</div></div>
     <div class="q"><p>3) <code>__post_init__()</code> ใน frozen dataclass มีบทบาทใด และเหตุใดจึงต้องใช้ออปเจกต์ <code>object.__setattr__</code> ในการแก้ค่า <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">__post_init__ ทำหน้าที่ตรวจสอบและ normalize ค่าหลัง dataclass สร้างวัตถุเสร็จ</div><div class="line">ต้องใช้ object.__setattr__ เพราะ frozen dataclass ห้ามแก้ field ด้วยวิธีปกติ</div></div>
     <div class="q"><p>4) ลูกศร “raises” ชี้ไปยัง ValueError หมายถึงพฤติกรรมใด และเกิดขึ้นเมื่อใด <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">หมายถึงเมื่อ normalize แล้วค่าที่ได้ไม่ตรงรูปแบบอีเมลที่ถูกต้อง</div><div class="line">จะเกิดขึ้นภายใน __post_init__ ทันทีตอนสร้างวัตถุ</div></div>
     <div class="q"><p>5) เหตุใดเมธอด equals(other) จึงเปรียบเทียบด้วย “ค่า” แทน identity ของออบเจกต์ <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">เพราะ Value Object ไม่มี identity เปรียบเทียบกันด้วยค่าที่แท้จริงเท่านั้น</div></div>
     <div class="q"><p>6) เมธอด <code>__str__()</code> มีประโยชน์อย่างไรต่อการใช้งานจริง <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">ทำให้แสดงค่าอีเมลเป็น string ได้โดยตรงเมื่อใช้ print() หรือ f-string โดยไม่ต้องเรียก .value เอง</div></div>
 
     <h2>ส่วนที่ 2: วิเคราะห์โค้ด (10 คะแนน)</h2>
 <pre class="code">
@@ -325,13 +318,13 @@ another_email = Email.from_string("student@example.ac.th")
 print(student_email.equals(another_email))
 </pre>
     <div class="q"><p>1) ผลลัพธ์ของ <code>Email.from_string("Student@Example.ac.th ")</code> คืออะไร จงอธิบายการทำงานทีละขั้นตอน <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ผลลัพธ์คือ 'student@example.ac.th' ขั้นตอนคือ strip ช่องว่าง แล้ว lower-case</div><div class="line">จากนั้นตรวจ regex ผ่านจึงเก็บค่าที่ normalize แล้วด้วย object.__setattr__</div></div>
     <div class="q"><p>2) การเรียก <code>Email.from_string("student@invalid")</code> จะเกิดอะไรขึ้น เพราะเหตุใด <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">จะเกิด ValueError('Invalid email address.') เพราะค่าไม่ตรงกับ regex ที่กำหนดรูปแบบอีเมล</div><div class="line"></div></div>
     <div class="q"><p>3) เหตุใด <code>equals</code> ระหว่าง "Student@Example.ac.th " กับ "student@example.ac.th" จึงคืนค่า True <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เพราะ __post_init__ normalize ทั้งสองค่าด้วย strip และ lower-case ก่อนเปรียบเทียบ</div><div class="line">ทำให้ค่าที่ต่างกันแค่ตัวพิมพ์และช่องว่างถูกมองว่าเท่ากัน</div></div>
     <div class="q"><p>4) หากพยายามแก้ไข <code>student_email.value = "x@y.z"</code> จะเกิดอะไรขึ้น เพราะเหตุใดจึงออกแบบเป็น frozen <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">จะเกิด FrozenInstanceError ทันที เพราะ frozen=True ห้ามแก้ไข field หลังสร้างวัตถุ</div><div class="line">ออกแบบเป็น frozen เพื่อรับประกันว่าค่าที่ validate แล้วจะไม่ถูกทำให้เสียภายหลัง</div></div>
 
     <h2>ส่วนที่ 3: เติมโค้ดในช่องว่าง (12 คะแนน)</h2>
 <pre class="code">
@@ -356,9 +349,9 @@ class Email:
     <table>
         <thead><tr><th>ช่องที่</th><th>คำตอบ</th><th>ช่องที่</th><th>คำตอบ</th></tr></thead>
         <tbody>
-            <tr><td>(1)</td><td class="fill"></td><td>(4)</td><td class="fill"></td></tr>
-            <tr><td>(2)</td><td class="fill"></td><td>(5)</td><td class="fill"></td></tr>
-            <tr><td>(3)</td><td class="fill"></td><td>(6)</td><td class="fill"></td></tr>
+            <tr><td>(1)</td><td class="fill">frozen=True</td><td>(4)</td><td class="fill">fullmatch</td></tr>
+            <tr><td>(2)</td><td class="fill">__post_init__</td><td>(5)</td><td class="fill">object</td></tr>
+            <tr><td>(3)</td><td class="fill">lower</td><td>(6)</td><td class="fill">classmethod</td></tr>
         </tbody>
     </table>
 
@@ -366,35 +359,35 @@ class Email:
     <table>
         <thead><tr><th style="width:42%;">Test Case</th><th>ผลลัพธ์ที่คาดหวัง</th><th>ผลลัพธ์จริง</th><th style="width:10%;">ผ่าน?</th></tr></thead>
         <tbody>
-            <tr><td>Email.from_string('Student@Example.ac.th ') แล้ว str()</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>Email.from_string('invalid-email')</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>equals ระหว่าง ' a@b.co ' กับ 'A@B.CO'</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>Email.from_string('')</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>print(email) (ใช้ __str__ โดยอ้อม)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>email.value = 'x@y.z' (พยายามแก้ไขค่า)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+            <tr><td>Email.from_string('Student@Example.ac.th ') แล้ว str()</td><td class="fill">'student@example.ac.th'</td><td class="fill">'student@example.ac.th'</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>Email.from_string('invalid-email')</td><td class="fill">ValueError: Invalid email address.</td><td class="fill">ValueError: Invalid email address.</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>equals ระหว่าง ' a@b.co ' กับ 'A@B.CO'</td><td class="fill">True</td><td class="fill">True</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>Email.from_string('')</td><td class="fill">ValueError: Invalid email address.</td><td class="fill">ValueError: Invalid email address.</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>print(email) (ใช้ __str__ โดยอ้อม)</td><td class="fill">แสดงค่าอีเมลเป็น string ปกติ</td><td class="fill">แสดงค่าอีเมลเป็น string ปกติ</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>email.value = 'x@y.z' (พยายามแก้ไขค่า)</td><td class="fill">เกิด FrozenInstanceError</td><td class="fill">เกิด FrozenInstanceError</td><td class="fill">ผ่าน</td></tr>
         </tbody>
     </table>
 
     <h2>ส่วนที่ 5: สะท้อนคิดเชิงออกแบบ OOAD (6 คะแนน)</h2>
     <div class="q"><p>1) Email Value Object ช่วยลดการเขียนกฎตรวจสอบซ้ำซ้อน (DRY) ในระบบได้อย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">Email รวมกฎตรวจสอบไว้ที่เดียว ทุกโมดูลเรียกใช้ Email.from_string() แทนการเขียนกฎซ้ำเอง</div><div class="line">จึงลดโอกาสที่แต่ละที่จะตรวจสอบไม่ตรงกัน</div></div>
     <div class="q"><p>2) เหตุใด Immutability จึงสำคัญต่อ Value Object จงยกตัวอย่างปัญหาหากค่าถูกแก้ไขได้หลังสร้าง <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">Immutability ป้องกันไม่ให้ค่าที่ validate แล้วถูกแก้ไขจนผิดเพี้ยนภายหลัง</div><div class="line">หากแก้ไขได้ ค่าที่แก้อาจไม่ผ่านการตรวจสอบและทำให้ระบบพังโดยไม่รู้ตัว</div></div>
     <div class="q"><p>3) Email สามารถนำไปใช้ร่วมกับ Use Case อื่น (เช่น RegisterUserService ข้อ 10) ได้อย่างไร และดีอย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ส่ง Email object แทน string ดิบให้ RegisterUserService ได้โดยตรง</div><div class="line">ทำให้ Use Case มั่นใจได้ว่าอีเมลที่รับมาถูกต้องและ normalize แล้วเสมอ</div></div>
 
     <!-- Facilitator: Future -->
     <h2><span class="tag3f">Future</span> นำสิ่งค้นพบไปสู่อนาคต</h2>
     <div class="q"><p>1) ในโปรเจกต์ Python ถัดไปของคุณ ข้อมูลใดคือ “อีเมลคนใหม่” (มีกฎตรวจสอบและถูกเขียนซ้ำกระจายอยู่) และคุณจะเปลี่ยนมันให้เป็น Value Object อย่างไร</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ข้อมูลที่มักมีกฎตรวจสอบซ้ำกระจายคือ เบอร์โทรศัพท์หรือรหัสไปรษณีย์</div><div class="line">จะเปลี่ยนเป็น Value Object ที่ validate และ normalize ตอนสร้างครั้งเดียวเช่นเดียวกับ Email</div></div>
     <div class="q"><p>2) เขียน commitments สั้น ๆ 2 ข้อ เกี่ยวกับนิสัย “validate ครั้งเดียว ณ จุดสร้าง และห้ามแก้ไขภายหลัง” ที่คุณจะนำไปใช้จริง</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">1) validate ค่าให้เสร็จตั้งแต่จุดสร้างวัตถุเท่านั้น (fail fast)</div><div class="line">2) ห้ามแก้ไขค่า Value Object หลังสร้างแล้วเด็ดขาด</div></div>
 
     <!-- Coach: Reflect -->
     <div class="coach">
         <strong>🪞 มุมสะท้อนคิดของโค้ช:</strong>
         <div class="q"><p>ชมความพยายามของตัวเอง 1 เรื่อง แล้วบันทึก “คำถามที่ยังค้างอยู่ในหัวคุณ” เกี่ยวกับ Value Object หรือ immutability</p>
-            <div class="line"></div><div class="line"></div></div>
+            <div class="line">ชื่นชมตัวเองที่เข้าใจ Value Object และ Immutability ได้ชัดเจนขึ้น</div><div class="line">คำถามที่ยังค้างคือ ควรใช้ frozen dataclass หรือ NamedTuple สำหรับ Value Object แบบใด</div></div>
     </div>
 
     <h2>เกณฑ์การให้คะแนน</h2>
@@ -410,9 +403,6 @@ class Email:
         </tbody>
     </table>
     <p style="font-size:0.9rem; color:#475569;">* ส่วน Feeling / Sandbox / Future / มุมสะท้อนคิด ไม่ตัดคะแนน — มีไว้เพื่อการเรียนรู้เท่านั้น</p>
-
-
-
 </div>
 
 <script>

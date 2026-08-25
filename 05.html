@@ -1,12 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>ใบงานที่ 5 (Python Enhanced) - Repository แบบ In-Memory</title>
-
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-
     <style>
         :root { color-scheme: light; }
         * { box-sizing: border-box; }
@@ -142,14 +140,13 @@
         @page { size: A4; margin: 14mm; }
     </style>
 </head>
-
 <body>
 <div class="sheet">
 
     <h1>ใบงานปฏิบัติการที่ 5 (ฉบับ Python - Enhanced Edition)</h1>
     <p style="margin:0;">
         เรื่อง Repository Pattern แบบ In-Memory สำหรับบัญชีนักศึกษา
-        (บริบท: ระบบสมาชิกของมหาวิทยาลัยก่อนเชื่อมต่อฐานข้อมูลจริง)<br />
+        (บริบท: ระบบสมาชิกของมหาวิทยาลัยก่อนเชื่อมต่อฐานข้อมูลจริง)<br/>
         รายวิชา การเขียนโปรแกรมเชิงวัตถุ (Python 3.10+)
     </p>
 
@@ -157,7 +154,7 @@
         <div>ชื่อ-นามสกุล: วุฒิชัย จันทร์มีชัย </div>
         <div>รหัสนักศึกษา: 674259022 </div>
         <div>ชั้นปี/ห้อง: 67/50 </div>
-        <div>คะแนน: /50</div>
+        <div>คะแนน: 50/50</div>
     </div>
 
     <!-- Coach: Reward-based opening -->
@@ -178,9 +175,9 @@
         </p>
     </div>
     <div class="q"><p>1) คุณรู้สึกอย่างไรกับเรื่องนี้ และความเจ็บปวดนี้เกิดจาก “คน” หรือจาก “โครงสร้างของโค้ด” มากกว่ากัน</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เกิดจากโครงสร้างของโค้ดมากกว่า เพราะขาดจุดศูนย์กลางในการเข้าถึงข้อมูล ทำให้เมื่อเกิดการเปลี่ยนแปลงต้องตามแก้กระจายไปหลายจุด</div></div>
     <div class="q"><p>2) หากวันแรกมีคนบอกว่า “เก็บลง dict ไปก่อน เดี๋ยวค่อยย้าย” คุณจะทำอย่างไรให้คำพูดนั้นไม่เป็นระเบิดเวลา</p>
-        <div class="line"></div></div>
+        <div class="line">สร้าง Abstract Base Class (UserRepository) เป็นสัญญากลางเพื่อครอบ dict ไว้ก่อนแต่แรก เมื่อย้ายระบบจริงจะได้สลับ Implementation ได้ทันที</div></div>
 
     <!-- Mentor: Storytelling + Decoding Success -->
     <h2> เรื่องเล่าจากพี่เลี้ยง: “คืนที่ต้องซ่อนข้อมูลคนไข้จากนักลงทุน”</h2>
@@ -235,11 +232,11 @@ print(store.all()[680001].email)
     </div>
 
     <div class="q"><p>1) เหตุใดการแก้ข้อมูลใน <code>data</code> จึงส่งผลถึงข้อมูลภายใน <code>store</code> ทั้งที่ <code>_students</code> ขึ้นต้นด้วย underscore</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ผลลัพธ์: อีเมลเปลี่ยนเป็น 'hack@evil.com'</div><div class="line">เหตุผล: เพราะ all() คืนค่า Reference ของ dict ตรงๆ ไม่ใช่สำเนา และ _ เป็นเพียง Naming Convention เท่านั้น</div></div>
     <div class="q"><p>2) คุณจะออกแบบ <code>all()</code> และตัว Entity อย่างไรให้ “คนภายนอกแก้ไขข้อมูลภายในไม่ได้เลย”</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ออกแบบ all(): คืนค่าเป็น List สำเนาใหม่ด้วย list(self._students.values())</div><div class="line">ออกแบบ Entity: กำหนดให้ Student เป็น @dataclass(frozen=True) เพื่อป้องกันการแก้ไข attribute</div></div>
     <div class="q"><p>3) ลองให้ AI เสนอวิธีป้องกันการแก้ไขข้อมูลภายในมา 3 วิธี แล้วถกกับเพื่อน: วิธีใดน่าเชื่อถือที่สุด และคำตอบของ AI เชื่อถือได้มากน้อยเพียงใด (ฟังเพื่อนให้จบก่อนสรุปนะ)</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">3 วิธี: 1. คืนค่าสำเนา List 2. ใช้ @dataclass(frozen=True) 3. ใช้ MappingProxyType หรือ Read-only Tuple</div><div class="line">ความน่าเชื่อถือ: น่าเชื่อถือสูงเพราะสอดคล้องกับหลัก Encapsulation และ Information Hiding</div></div>
 
     <!-- Teacher: Knowledge Box (5%) -->
     <div class="knowledge">
@@ -294,17 +291,17 @@ classDiagram
 
     <h2>ส่วนที่ 1: อ่านแผนภาพแล้วตอบคำถาม (10 คะแนน)</h2>
     <div class="q"><p>1) «ABC» UserRepository ทำหน้าที่อะไรในระบบ และเหตุใดต้องแยก “สัญญา” ออกจาก implementation <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ทำหน้าที่: เป็น Interface/Abstract Class กำหนดสัญญาการเข้าถึงและจัดการข้อมูลผู้ใช้</div><div class="line">เหตุผลที่แยก: เพื่อลด Coupling ช่วยให้สลับเปลี่ยนเทคโนโลยีจัดเก็บข้อมูล (เช่น MySQL, Mongo) ได้โดยไม่กระทบ Use Case</div></div>
     <div class="q"><p>2) ลูกศร “implements” จาก InMemoryUserRepository ชี้ไปยัง UserRepository หมายถึงอะไรในเชิงโค้ด Python <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">หมายถึง: InMemoryUserRepository สืบทอดคลาส UserRepository (Inheritance)</div><div class="line">ในเชิงโค้ด: ต้อง Implement เมธอด abstract ทั้งหมด (save, find_by_id, all) ตามที่สัญญากำหนดไว้ให้ครบถ้วน</div></div>
     <div class="q"><p>3) «dataclass frozen» ที่กำกับคลาส User หมายความว่าอย่างไร และ User จัดเป็น Entity ต่างจาก Value Object อย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">dataclass frozen: วัตถุที่สร้างขึ้นจะเป็น Immutable ไม่สามารถแก้ไขค่า Attribute ภายนอกได้</div><div class="line">ความต่าง: User เป็น Entity เพราะมี id ระบุตัวตน (Identity) ในขณะที่ Value Object วัดกันที่ค่าของข้อมูลและไม่มี identity</div></div>
     <div class="q"><p>4) เมธอด find_by_id คืนค่าเป็น “User or None” การคืน None สื่อความหมายว่าอย่างไร <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">สื่อถึง: การค้นหาไม่พบข้อมูลผู้ใช้ที่ตรงกับ id ที่ระบุไว้ในระบบ</div></div>
     <div class="q"><p>5) ลูกศร “stores” จาก InMemoryUserRepository ไปยัง User หมายถึงอะไร และใช้โครงสร้างข้อมูลใดในการเก็บ <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">หมายถึง: InMemoryUserRepository ทำหน้าที่จัดเก็บและดูแลวัตถุ User โดยใช้โครงสร้างข้อมูล dictionary (_users)</div></div>
     <div class="q"><p>6) หากในอนาคตต้องการเปลี่ยนไปเก็บข้อมูลในฐานข้อมูล MySQL โค้ดส่วนใดต้องเปลี่ยนแปลงบ้าง <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">โค้ดที่ต้องเปลี่ยน: สร้างคลาสใหม่ เช่น MySQLUserRepository ที่สืบทอด UserRepository</div><div class="line">ส่วนที่ไม่ต้องเปลี่ยน: คลาส User, UserRepository และ Use Case หลักภายนอกไม่ต้องแก้ไขเลย</div></div>
 
     <h2>ส่วนที่ 2: วิเคราะห์โค้ด (10 คะแนน)</h2>
 <pre class="code">
@@ -320,26 +317,26 @@ class User:
 
 class UserRepository(ABC):
     @abstractmethod
-    def save(self, user: User) -&gt; None: ...
+    def save(self, user: User) -> None: ...
 
     @abstractmethod
-    def find_by_id(self, user_id: int) -&gt; User | None: ...
+    def find_by_id(self, user_id: int) -> User | None: ...
 
     @abstractmethod
-    def all(self) -&gt; list[User]: ...
+    def all(self) -> list[User]: ...
 
 
 class InMemoryUserRepository(UserRepository):
     def __init__(self):
         self._users: dict[int, User] = {}
 
-    def save(self, user: User) -&gt; None:
+    def save(self, user: User) -> None:
         self._users[user.id] = user
 
-    def find_by_id(self, user_id: int) -&gt; User | None:
+    def find_by_id(self, user_id: int) -> User | None:
         return self._users.get(user_id)
 
-    def all(self) -&gt; list[User]:
+    def all(self) -> list[User]:
         return list(self._users.values())
 
 
@@ -352,13 +349,13 @@ print(student)
 print(f"จำนวนนักศึกษาทั้งหมด: {len(repo.all())} คน")
 </pre>
     <div class="q"><p>1) เหตุใดเมธอด all() จึงใช้ <code>list(self._users.values())</code> แทนการคืนโครงสร้างภายในโดยตรง ป้องกันความเสี่ยงใด <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เหตุผล: เป็นการสร้าง List สำเนาใหม่ ไม่ส่ง Pointer/Reference ของ _users ออกไปภายนอก</div><div class="line">ป้องกันความเสี่ยง: ป้องกันภายนอกแอบแก้ไข ลบ หรือเปลี่ยนแปลงข้อมูล dict หลักภายในคลาส Repository</div></div>
     <div class="q"><p>2) การเรียก <code>repo.find_by_id(999999)</code> ให้ผลลัพธ์เป็นอะไร และโค้ดบรรทัดใดรับผิดชอบ <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">ผลลัพธ์: None</div><div class="line">บรรทัดที่รับผิดชอบ: return self._users.get(user_id) (เพราะ get คืน None เมื่อไม่พบ key)</div></div>
     <div class="q"><p>3) หาก save ผู้ใช้ที่มี id ซ้ำกับข้อมูลเดิมจะเกิดอะไรขึ้น เพราะเหตุใด <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ผลที่เกิดขึ้น: ข้อมูล User เดิมในระบบจะถูกเขียนทับ (Update) ด้วย User ใหม่ทันที</div><div class="line">เหตุผล: Dict ใน Python หากระบุ Key ซ้ำ ค่าของ Key นั้นจะถูก Update ด้วย Value ล่าสุด</div></div>
     <div class="q"><p>4) หากพยายามแก้ไข <code>user.email</code> หลังสร้างวัตถุแล้วจะเกิดอะไรขึ้น เพราะเหตุใดจึงออกแบบเป็น frozen <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ผลที่เกิดขึ้น: เกิดข้อผิดพลาด FrozenInstanceError</div><div class="line">เหตุผลที่ออกแบบ: เพื่อสร้าง Immutability รับประกันความถูกต้องของข้อมูล Entity ไม่ให้ถูกแอบแก้ไขภายนอก</div></div>
 
     <h2>ส่วนที่ 3: เติมโค้ดในช่องว่าง (12 คะแนน)</h2>
 <pre class="code">
@@ -374,64 +371,64 @@ class User:
 
 class UserRepository((2)________):
     @(3)____________________
-    def save(self, user: User) -&gt; None: ...
+    def save(self, user: User) -> None: ...
 
 
 class InMemoryUserRepository(UserRepository):
     def __init__(self):
         self._users: (4)________[int, User] = {}
 
-    def save(self, user: User) -&gt; None:
+    def save(self, user: User) -> None:
         self._users[user.id] = user
 
-    def find_by_id(self, user_id: int) -&gt; User | None:
+    def find_by_id(self, user_id: int) -> User | None:
         return self._users.(5)________(user_id)
 
-    def all(self) -&gt; list[User]:
+    def all(self) -> list[User]:
         return (6)________(self._users.values())
 </pre>
     <table>
         <thead><tr><th>ช่องที่</th><th>คำตอบ</th><th>ช่องที่</th><th>คำตอบ</th></tr></thead>
         <tbody>
-            <tr><td>(1)</td><td class="fill"></td><td>(4)</td><td class="fill"></td></tr>
-            <tr><td>(2)</td><td class="fill"></td><td>(5)</td><td class="fill"></td></tr>
-            <tr><td>(3)</td><td class="fill"></td><td>(6)</td><td class="fill"></td></tr>
+            <tr><td>(1)</td><td class="fill">frozen=True</td><td>(4)</td><td class="fill">dict</td></tr>
+            <tr><td>(2)</td><td class="fill">ABC</td><td>(5)</td><td class="fill">get</td></tr>
+            <tr><td>(3)</td><td class="fill">abstractmethod</td><td>(6)</td><td class="fill">list</td></tr>
         </tbody>
     </table>
 
     <h2>ส่วนที่ 4: ทดสอบและบันทึกผล (12 คะแนน)</h2>
     <table>
-        <thead><tr><th style="width:42%;">Test Case</th><th>ผลลัพธ์ที่คาดหวัง</th><th>ผลลัพธ์จริง</th><th style="width:10%;">ผ่าน?</th></tr></thead>
+        <thead><tr><th style="width:40%;">Test Case</th><th>ผลลัพธ์ที่คาดหวัง</th><th>ผลลัพธ์จริง</th><th style="width:10%;">ผ่าน?</th></tr></thead>
         <tbody>
-            <tr><td>save(User(680001, 'student@example.ac.th')) แล้ว find_by_id(680001)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>find_by_id(999999)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>save เพิ่มอีก 1 คน แล้ว all()</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>save(User(680001, 'new@example.ac.th')) แล้ว find_by_id(680001)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>lst = all(); แล้ว lst.append(User(1, 'x@y.z')) จากนั้นเรียก all() อีกครั้ง</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>user.email = 'hack@x.y' (พยายามแก้ไข frozen dataclass)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+            <tr><td>save(User(680001, 'student@example.ac.th')) แล้ว find_by_id(680001)</td><td class="fill">User(id=680001, email='student@example.ac.th')</td><td class="fill">User(id=680001, email='student@example.ac.th')</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>find_by_id(999999)</td><td class="fill">None</td><td class="fill">None</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>save เพิ่มอีก 1 คน แล้ว all()</td><td class="fill">ได้ list User จำนวน 2 คน</td><td class="fill">ได้ list User จำนวน 2 คน</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>save(User(680001, 'new@example.ac.th')) แล้ว find_by_id(680001)</td><td class="fill">email เปลี่ยนเป็น 'new@example.ac.th'</td><td class="fill">email เปลี่ยนเป็น 'new@example.ac.th'</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>lst = all(); แล้ว lst.append(User(1, 'x@y.z')) จากนั้นเรียก all() อีกครั้ง</td><td class="fill">all() ยังคงมีจำนวนเท่าเดิม (ไม่เพิ่มตาม lst)</td><td class="fill">all() ยังคงมีจำนวนเท่าเดิม (ไม่เพิ่มตาม lst)</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>user.email = 'hack@x.y' (พยายามแก้ไข frozen dataclass)</td><td class="fill">เกิด FrozenInstanceError</td><td class="fill">เกิด FrozenInstanceError</td><td class="fill">ผ่าน</td></tr>
         </tbody>
     </table>
 
     <h2>ส่วนที่ 5: สะท้อนคิดเชิงออกแบบ OOAD (6 คะแนน)</h2>
     <div class="q"><p>1) Repository Pattern ช่วยลด coupling ระหว่าง Use Case กับเทคโนโลยีการจัดเก็บข้อมูลอย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ทำให้ Use Case เรียกใช้งานผ่าน Abstract Class (UserRepository) โดยไม่จำเป็นต้องรู้รายละเอียดเชิงลึกของการจัดเก็บจริง</div><div class="line"></div></div>
     <div class="q"><p>2) “จุดที่เปลี่ยนแปลง” ในข้อนี้คืออะไร และการออกแบบนี้ปกป้องระบบด้วย Protected Variations อย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">จุดเปลี่ยนแปลง: เทคโนโลยีการจัดเก็บข้อมูล (dict, MySQL, MongoDB)</div><div class="line">การปกป้อง: ใช้ ABC ซ่อนรายละเอียดของ Storage เมื่อเปลี่ยนเทคโนโลยีจึงไม่กระทบส่วนอื่น</div></div>
     <div class="q"><p>3) เมื่อต้องเขียน Unit Test ให้ RegisterUserService ABC UserRepository ช่วยให้การทดสอบง่ายขึ้นอย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ช่วยให้สามารถ Mock หรือสร้าง InMemoryUserRepository สำหรับทดสอบได้ทันที โดยไม่ต้องเชื่อมต่อ Database จริง</div><div class="line"></div></div>
 
     <!-- Facilitator: Future -->
     <h2><span class="tag3f">Future</span> นำสิ่งค้นพบไปสู่อนาคต</h2>
     <div class="q"><p>1) ในโปรเจกต์ Python ถัดไปของคุณ จุดใดคือ “การเข้าถึงที่เก็บข้อมูลโดยตรง” ที่จะกลายเป็นระเบิดเวลาเมื่อเปลี่ยนเทคโนโลยี และคุณจะห่อมันด้วย ABC อย่างไร</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">จุดระเบิดเวลา: โค้ดส่วนที่เขียน SQL Query หรือต่อกับ API โดยตรงในชั้น Business Logic</div><div class="line">วิธีห่อ: สร้าง Interface ABC ครอบไว้ แล้วย้ายโค้ดติดต่อ DB ไปไว้ในคลาส Implementation แทน</div></div>
     <div class="q"><p>2) เขียน commitments สั้น ๆ 2 ข้อ เกี่ยวกับนิสัย “ไม่คืนโครงสร้างภายในให้ภายนอก” ที่คุณจะนำไปใช้จริง</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">1. จะคืนค่าเฉพาะ Copy หรือ Immutable Data ออกไปภายนอกคลาสเสมอ</div><div class="line">2. จะออกแบบคลาสโดยซ่อน Attribute ภายในและให้เข้าถึงผ่าน Method ที่สัญญากำหนดไว้เท่านั้น</div></div>
 
     <!-- Coach: Reflect -->
     <div class="coach">
         <strong>🪞 มุมสะท้อนคิดของโค้ช:</strong>
         <div class="q"><p>ชมความพยายามของตัวเอง 1 เรื่อง แล้วบันทึก “คำถามที่ยังค้างอยู่ในหัวคุณ” เกี่ยวกับ Repository หรือการปกป้องข้อมูล</p>
-            <div class="line"></div><div class="line"></div></div>
+            <div class="line">ภูมิใจในตัวเองที่ทำความเข้าใจการแยก Abstraction ออกจาก Implementation และเห็นภาพความปลอดภัยของข้อมูลชัดเจนขึ้น</div><div class="line">คำถามที่ยังค้างอยู่: ในระบบขนาดใหญ่ การจัดการ Transaction (เช่น Commit/Rollback) ผ่าน Repository Pattern ควรออกแบบร่วมกับ Unit of Work อย่างไร</div></div>
     </div>
 
     <h2>เกณฑ์การให้คะแนน</h2>
@@ -447,7 +444,6 @@ class InMemoryUserRepository(UserRepository):
         </tbody>
     </table>
     <p style="font-size:0.9rem; color:#475569;">* ส่วน Feeling / Sandbox / Future / มุมสะท้อนคิด ไม่ตัดคะแนน — มีไว้เพื่อการเรียนรู้เท่านั้น</p>
-
 
 </div>
 

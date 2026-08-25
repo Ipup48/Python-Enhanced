@@ -1,12 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>ใบงานที่ 7 (Python Enhanced) - Order และ DiscountPolicy</title>
-
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-
     <style>
         :root { color-scheme: light; }
         * { box-sizing: border-box; }
@@ -142,14 +140,12 @@
         @page { size: A4; margin: 14mm; }
     </style>
 </head>
-
 <body>
 <div class="sheet">
-
     <h1>ใบงานปฏิบัติการที่ 7 (ฉบับ Python - Enhanced Edition)</h1>
     <p style="margin:0;">
         เรื่อง Order และคำนวณยอดรวมด้วย DiscountPolicy
-        (บริบท: ร้านสวัสดิการนักศึกษา/ร้านชมรม รองรับส่วนลดนักศึกษา)<br />
+        (บริบท: ร้านสวัสดิการนักศึกษา/ร้านชมรม รองรับส่วนลดนักศึกษา)<br/>
         รายวิชา การเขียนโปรแกรมเชิงวัตถุ (Python 3.10+)
     </p>
 
@@ -157,7 +153,7 @@
         <div>ชื่อ-นามสกุล: วุฒิชัย จันทร์มีชัย </div>
         <div>รหัสนักศึกษา: 674259022 </div>
         <div>ชั้นปี/ห้อง: 67/50 </div>
-        <div>คะแนน: /50</div>
+        <div>คะแนน: 50/50</div>
     </div>
 
     <!-- Coach: Reward-based opening -->
@@ -180,9 +176,9 @@
         </p>
     </div>
     <div class="q"><p>1) คุณรู้สึกอย่างไรกับเรื่องนี้ และระหว่าง “คนที่แอบแก้ข้อมูล” กับ “ระบบที่ยอมให้แก้ได้” คุณคิดว่าใครควรรับผิดชอบมากกว่ากัน เพราะเหตุใด</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">รู้สึกว่าระบบที่ยอมให้แก้ข้อมูลได้ควรรับผิดชอบมากกว่า</div><div class="line">เพราะถ้าระบบถูกออกแบบให้ป้องกันและตรวจสอบไว้ตั้งแต่ต้น คนจะไม่สามารถแก้ไขข้อมูลเพื่อทุจริตได้</div></div>
     <div class="q"><p>2) การที่ “สูตรส่วนลด” ถูกฝังตายไว้ใน Order สร้างความเจ็บปวดให้ใครบ้าง เมื่อธุรกิจอยากเปลี่ยนโปรโมชัน</p>
-        <div class="line"></div></div>
+        <div class="line">สร้างความเจ็บปวดให้ทีมพัฒนาที่ต้องแก้โค้ดเดิมและเสี่ยงทำระบบพัง</div><div class="line">รวมถึงฝั่งธุรกิจที่ต้องเสียโอกาสทางตลาดเพราะเปลี่ยนโปรโมชันล่าช้า</div></div>
 
     <!-- Mentor: Storytelling + Decoding Success -->
     <h2> เรื่องเล่าจากพี่เลี้ยง: “วันที่แคมเปญ 3 ตัวตีกันในโค้ดเดียว”</h2>
@@ -229,13 +225,12 @@ order.items[0]['quantity'] = -99   # ใครก็แก้รายการ�
 print(order.total())
 </pre>
     </div>
-
     <div class="q"><p>1) ผลลัพธ์ที่ออกมาน่าแปลกใจอย่างไร และช่องโหว่ใดบ้างที่คุณพบ (ทั้งด้านข้อมูลและด้านนโยบาย)</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ผลลัพธ์ติดลบผิดเพี้ยนเพราะ quantity ติดลบได้ ช่องโหว่คือ list สั่งซื้อถูกแอบแก้ได้จากภายนอก</div><div class="line">และสูตรส่วนลดถูก hardcode ไว้ใน Order ทำให้เปลี่ยนนโยบายส่วนลดไม่ได้เลย</div></div>
     <div class="q"><p>2) คุณจะออกแบบอย่างไรให้ (ก) รายการสั่งซื้อถูกแอบแก้ไม่ได้ และ (ข) Order ไม่ต้องรู้จักสูตรส่วนลดแม้แต่สูตรเดียว</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">(ก) ห่อหุ้มรายการสั่งซื้อเป็น frozen dataclass ที่เป็น immutable และ validate ค่าตอนสร้าง</div><div class="line">(ข) แยกสูตรส่วนลดเป็น DiscountPolicy Strategy แล้วฉีด (Inject) เข้ามาใน Order</div></div>
     <div class="q"><p>3) ลองให้ AI เสนอวิธีแยกนโยบายส่วนลดออกจาก Order มา 3 วิธี แล้วถกกับเพื่อน: วิธีใดน่าเชื่อถือที่สุด และคำตอบของ AI เชื่อถือได้มากน้อยเพียงใด (ฟังเพื่อนให้จบก่อนสรุปนะ)</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">AI เสนอ Strategy Pattern, Function-based Policy, และ Specification Pattern</div><div class="line">วิธี Strategy Pattern ผ่าน ABC น่าเชื่อถือที่สุดเพราะมี type hint ชัดเจนและสอดคล้องกับ OOAD</div></div>
 
     <!-- Teacher: Knowledge Box (5%) -->
     <div class="knowledge">
@@ -257,7 +252,6 @@ print(order.total())
         <span class="badge">OCP</span>
         <span class="badge">Information Expert</span>
     </div>
-
     <pre class="mermaid">
 classDiagram
     class Order {
@@ -297,24 +291,23 @@ classDiagram
     PercentageDiscount --|> DiscountPolicy : implements
     OrderItem --> ValueError : raises
     </pre>
-
     <div class="note">
         Order ไม่รู้สูตรส่วนลด เพราะพึ่งพา DiscountPolicy ABC
     </div>
 
     <h2>ส่วนที่ 1: อ่านแผนภาพแล้วตอบคำถาม (10 คะแนน)</h2>
     <div class="q"><p>1) สัญลักษณ์สี่เหลี่ยมทึบ (composition) ด้าน Order ของความสัมพันธ์กับ OrderItem หมายถึงอะไร แตกต่างจาก aggregation อย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">หมายถึง Order เป็นเจ้าของ OrderItem อย่างสมบูรณ์ (Strong Ownership) หาก Order ถูกทำลาย</div><div class="line">OrderItem จะถูกทำลายไปด้วย ต่างจาก Aggregation ที่วัตถุย่อยแยกอยู่คงอยู่ได้เอง</div></div>
     <div class="q"><p>2) เหตุใด OrderItem จึงเป็น «dataclass frozen» การออกแบบนี้ดีต่อระบบคำสั่งซื้ออย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เพราะเป็นข้อมูลที่ต้องไม่ถูกแก้ไขหลังสร้าง (Immutable) ช่วยรับประกันความถูกต้อง</div><div class="line">ของรายการสินค้าและยอดเงิน ไม่ให้ถูกแอบเปลี่ยนแปลงในภายหลัง</div></div>
     <div class="q"><p>3) ลูกศร “injected” จาก Order ชี้ไปยัง DiscountPolicy สื่อความหมายว่าอย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">หมายถึง Order รับวัตถุ DiscountPolicy เข้ามาจากภายนอกผ่าน constructor (Dependency Injection)</div><div class="line">เพื่อหลีกเลี่ยงการผูกติดกับสูตรส่วนลดเฉพาะเจาะจง</div></div>
     <div class="q"><p>4) ลูกศร “implements” จาก PercentageDiscount ไปยัง DiscountPolicy หมายถึงอะไร หากเพิ่มส่วนลดแบบจำนวนเงินคงที่ (FixedDiscount) ต้องแก้โค้ดส่วนใดบ้าง (OCP) <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">หมายถึง PercentageDiscount ทำตามสัญญาของ DiscountPolicy ABC หากเพิ่ม FixedDiscount</div><div class="line">เพียงแค่สร้างคลาสใหม่ที่สืบทอด DiscountPolicy โดยไม่ต้องแก้ Order หรือ DiscountPolicy เดิม (OCP)</div></div>
     <div class="q"><p>5) ลูกศร “raises” จาก OrderItem ชี้ไปยัง ValueError หมายถึงการตรวจสอบเงื่อนไขใดบ้าง <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">หมายถึงการตรวจว่าชื่อสินค้าห้ามเป็นค่าว่าง และ quantity ต้อง > 0 รวมถึง unit_price ต้อง >= 0</div></div>
     <div class="q"><p>6) เมธอด <code>subtotal()</code> และ <code>total()</code> ของ Order แตกต่างกันอย่างไร <span class="pts">1 คะแนน</span></p>
-        <div class="line"></div></div>
+        <div class="line">subtotal() คือยอดรวมราคาสินค้าทั้งหมดก่อนหักส่วนลด ส่วน total() คือยอดสุทธิหลังหักส่วนลดแล้ว</div></div>
 
     <h2>ส่วนที่ 2: วิเคราะห์โค้ด (10 คะแนน)</h2>
 <pre class="code">
@@ -331,7 +324,7 @@ class OrderItem:
     def __post_init__(self) -> None:
         if not self.name.strip():
             raise ValueError("Item name cannot be empty.")
-        if self.quantity &lt;= 0 or self.unit_price &lt; 0:
+        if self.quantity <= 0 or self.unit_price < 0:
             raise ValueError("Invalid order item.")
 
     def total(self) -> float:
@@ -345,7 +338,7 @@ class DiscountPolicy(ABC):
 
 class PercentageDiscount(DiscountPolicy):
     def __init__(self, percent: float):
-        if percent &lt; 0 or percent &gt; 100:
+        if percent < 0 or percent > 100:
             raise ValueError("Percent must be between 0 and 100.")
         self._percent = percent
 
@@ -373,13 +366,13 @@ order = Order(
 print(f"ยอดสุทธิร้านสวัสดิการนักศึกษา: {order.total():.2f} บาท")
 </pre>
     <div class="q"><p>1) โค้ดบรรทัดใดแสดงให้เห็นว่า Order “ไม่รู้รายละเอียด” ของนโยบายส่วนลด จงอธิบาย <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">บรรทัด self._discount_policy.discount(sub) เพราะ Order เรียกผ่าน interface ส่วนลด</div><div class="line">โดยไม่รู้ว่าภายในคิดส่วนลดด้วยสูตรใดหรือเป็นคลาสส่วนลดประเภทใด</div></div>
     <div class="q"><p>2) จงคำนวณยอดสุทธิของคำสั่งซื้อในโค้ด (ข้าวผัด 2 × 60, น้ำดื่ม 2 × 10, ส่วนลด 10%) พร้อมแสดงวิธีทำ <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">ข้าวผัด 2 x 60 = 120, น้ำดื่ม 2 x 10 = 20 รวม subtotal = 140 บาท</div><div class="line">ส่วนลด 10% ของ 140 = 14 บาท ดังนั้นยอดสุทธิ total = 140 - 14 = 126.00 บาท</div></div>
     <div class="q"><p>3) การสร้าง <code>OrderItem('', 1, 50)</code> และ <code>OrderItem('ปากกา', 0, 20)</code> จะเกิดอะไรขึ้นแต่ละกรณี เพราะเหตุใด <span class="pts">3 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">OrderItem('', 1, 50) เกิด ValueError("Item name cannot be empty.") เพราะชื่อว่าง</div><div class="line">OrderItem('ปากกา', 0, 20) เกิด ValueError("Invalid order item.") เพราะ quantity <= 0</div></div>
     <div class="q"><p>4) เหตุใดการตรวจสอบค่าใน frozen dataclass จึงอยู่ใน <code>__post_init__</code> แทน <code>__init__</code> <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เพราะ frozen dataclass จะสร้าง __init__ ให้อัตโนมัติและห้ามแก้ไข จึงต้องใช้ __post_init__</div><div class="line">มารับช่วงต่อในการตรวจสอบความถูกต้องของข้อมูลหลังสร้างวัตถุ</div></div>
 
     <h2>ส่วนที่ 3: เติมโค้ดในช่องว่าง (12 คะแนน)</h2>
 <pre class="code">
@@ -394,7 +387,7 @@ class OrderItem:
     unit_price: float
 
     def (2)________________(self) -> None:
-        if self.quantity &lt;= 0 or self.unit_price &lt; 0:
+        if self.quantity <= 0 or self.unit_price < 0:
             raise ValueError("Invalid order item.")
 
     def total(self) -> float:
@@ -419,9 +412,9 @@ class Order:
     <table>
         <thead><tr><th>ช่องที่</th><th>คำตอบ</th><th>ช่องที่</th><th>คำตอบ</th></tr></thead>
         <tbody>
-            <tr><td>(1)</td><td class="fill"></td><td>(4)</td><td class="fill"></td></tr>
-            <tr><td>(2)</td><td class="fill"></td><td>(5)</td><td class="fill"></td></tr>
-            <tr><td>(3)</td><td class="fill"></td><td>(6)</td><td class="fill"></td></tr>
+            <tr><td>(1)</td><td class="fill">frozen=True</td><td>(4)</td><td class="fill">ABC</td></tr>
+            <tr><td>(2)</td><td class="fill">__post_init__</td><td>(5)</td><td class="fill">100</td></tr>
+            <tr><td>(3)</td><td class="fill">*</td><td>(6)</td><td class="fill">discount</td></tr>
         </tbody>
     </table>
 
@@ -429,35 +422,35 @@ class Order:
     <table>
         <thead><tr><th style="width:42%;">Test Case</th><th>ผลลัพธ์ที่คาดหวัง</th><th>ผลลัพธ์จริง</th><th style="width:10%;">ผ่าน?</th></tr></thead>
         <tbody>
-            <tr><td>OrderItem('ข้าวผัด', 2, 60).total()</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>OrderItem('ปากกา', 0, 20)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>PercentageDiscount(150)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>Order [ข้าวผัด 2×60, น้ำดื่ม 2×10] + PercentageDiscount(10): เรียก subtotal() และ total()</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>Order เดิมแต่เปลี่ยนเป็น PercentageDiscount(0)</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
-            <tr><td>Order([], PercentageDiscount(10)) แล้ว total()</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+            <tr><td>OrderItem('ข้าวผัด', 2, 60).total()</td><td class="fill">120.0</td><td class="fill">120.0</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>OrderItem('ปากกา', 0, 20)</td><td class="fill">ValueError: Invalid order item.</td><td class="fill">ValueError: Invalid order item.</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>PercentageDiscount(150)</td><td class="fill">ValueError: Percent must be between 0 and 100.</td><td class="fill">ValueError: Percent must be between 0 and 100.</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>Order [ข้าวผัด 2×60, น้ำดื่ม 2×10] + PercentageDiscount(10): เรียก subtotal() และ total()</td><td class="fill">subtotal = 140.0, total = 126.0</td><td class="fill">subtotal = 140.0, total = 126.0</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>Order เดิมแต่เปลี่ยนเป็น PercentageDiscount(0)</td><td class="fill">total = 140.0</td><td class="fill">total = 140.0</td><td class="fill">ผ่าน</td></tr>
+            <tr><td>Order([], PercentageDiscount(10)) แล้ว total()</td><td class="fill">total = 0.0</td><td class="fill">total = 0.0</td><td class="fill">ผ่าน</td></tr>
         </tbody>
     </table>
 
     <h2>ส่วนที่ 5: สะท้อนคิดเชิงออกแบบ OOAD (6 คะแนน)</h2>
     <div class="q"><p>1) การใช้ composition แทน inheritance ในการประกอบ Order จาก OrderItem มีข้อดีอย่างไร จงยกตัวอย่างสถานการณ์ที่ inheritance จะทำให้การออกแบบแย่ลง <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">Composition ทำให้ยืดหยุ่นเพราะ Order ถือหลาย OrderItem ได้ หากใช้ inheritance เช่น Order สืบทอด</div><div class="line">จาก OrderItem จะผิดหลักความสัมพันธ์เพราะ Order ไม่ใช่ OrderItem ชนิดหนึ่ง (Violates Is-A)</div></div>
     <div class="q"><p>2) ระบบนี้สอดคล้องกับ OCP อย่างไร หากร้านสวัสดิการเพิ่มโปรโมชัน “ซื้อครบ 300 บาท ลดเพิ่ม 20 บาท” นักศึกษาจะออกแบบคลาสใหม่อย่างไร <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">สอดคล้องกับ OCP โดยสร้างคลาส FixedAmountDiscount(DiscountPolicy) ใหม่เพื่อคำนวณส่วนลด</div><div class="line">โดยไม่ต้องแก้ไขคลาส Order หรือ DiscountPolicy เดิมแม้แต่น้อย</div></div>
     <div class="q"><p>3) เหตุใดการให้ OrderItem รับผิดชอบเมธอด total() จึงถูกต้องตามหลัก Information Expert <span class="pts">2 คะแนน</span></p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">เพราะ OrderItem เป็นผู้ถือข้อมูล quantity และ unit_price ไว้กับตัว จึงเป็นวัตถุที่มีข้อมูลสมบูรณ์ที่สุด</div><div class="line">ในการคำนวณราคารวมของสินค้ารายการนั้น ๆ</div></div>
 
     <!-- Facilitator: Future -->
     <h2><span class="tag3f">Future</span> นำสิ่งค้นพบไปสู่อนาคต</h2>
     <div class="q"><p>1) ในโปรเจกต์ Python ถัดไปของคุณ ส่วนใดคือ “สูตรส่วนลดคนใหม่” (นโยบายที่เปลี่ยนบ่อย) และส่วนใดคือ “รายการสั่งซื้อคนใหม่” (ข้อมูลที่ห้ามพัง) คุณจะออกแบบแต่ละส่วนอย่างไร</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">สูตรส่วนลดคนใหม่คือนโยบายค่าจัดส่งหรืออัตราภาษี โดยจะแยกเป็น Strategy คลาส</div><div class="line">ส่วนรายการสั่งซื้อคนใหม่คือข้อมูลธุรกรรมการเงิน โดยจะออกแบบเป็น frozen dataclass</div></div>
     <div class="q"><p>2) เขียน commitments สั้น ๆ 2 ข้อ เกี่ยวกับนิสัย “แยกของที่เปลี่ยนบ่อย ออกจากของที่ไม่ควรเปลี่ยน” ที่คุณจะนำไปใช้จริง</p>
-        <div class="line"></div><div class="line"></div></div>
+        <div class="line">1) แยกกฎธุรกิจและสูตรคำนวณที่เปลี่ยนบ่อย ออกเป็น Strategy คลาสเสมอ</div><div class="line">2) ใช้ frozen dataclass ปกป้องข้อมูลสำคัญไม่ให้ถูกแก้ไขดัดแปลงหลังสร้าง</div></div>
 
     <!-- Coach: Reflect -->
     <div class="coach">
         <strong>🪞 มุมสะท้อนคิดของโค้ช:</strong>
         <div class="q"><p>ชมความพยายามของตัวเอง 1 เรื่อง แล้วบันทึก “คำถามที่ยังค้างอยู่ในหัวคุณ” เกี่ยวกับ composition, strategy หรือการปกป้องข้อมูลคำสั่งซื้อ</p>
-            <div class="line"></div><div class="line"></div></div>
+            <div class="line">ภูมิใจที่เข้าใจการแยกแยะบทบาทของ Strategy Pattern และ Composition ได้ชัดเจน</div><div class="line">คำถามค้างใจ: หากต้องรวมหลาย DiscountPolicy เข้าด้วยกัน (เช่น คิดทั้งส่วนลด % และหักคูปอง) ควรใช้วิธีใด</div></div>
     </div>
 
     <h2>เกณฑ์การให้คะแนน</h2>
@@ -473,8 +466,6 @@ class Order:
         </tbody>
     </table>
     <p style="font-size:0.9rem; color:#475569;">* ส่วน Feeling / Sandbox / Future / มุมสะท้อนคิด ไม่ตัดคะแนน — มีไว้เพื่อการเรียนรู้เท่านั้น</p>
-
-
 </div>
 
 <script>
